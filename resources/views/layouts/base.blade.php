@@ -38,7 +38,7 @@
         <script src="{{ secure_asset('js/sa.js') }}"></script>
         <x-livewire-alert::scripts />
 {{--        <script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>--}}
-        <script src="{{ secure_asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
-
+{{--        <script src="{{ secure_asset('js/spa.js') }}" data-turbolinks-eval="false"></script>--}}
+        <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script>
     </body>
 </html>
