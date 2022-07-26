@@ -17,12 +17,12 @@
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+{{--        <link rel="stylesheet" href="{{ asset('css/app.css') }}">--}}
         <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
         @livewireStyles
 
         <!-- Scripts -->
-        <script src="{{ asset('js/app.js') }}" defer></script>
+{{--        <script src="{{ asset('js/app.js') }}" defer></script>--}}
         <script src="{{ secure_asset('js/app.js') }}" defer></script>
 
         <!-- CSRF Token -->
@@ -34,10 +34,10 @@
 
         @livewireScripts
         {{--        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
-        <script src="{{ asset('js/sa.js') }}"></script>
+{{--        <script src="{{ asset('js/sa.js') }}"></script>--}}
         <script src="{{ secure_asset('js/sa.js') }}"></script>
         <x-livewire-alert::scripts />
-        <script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
+{{--        <script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>--}}
         <script src="{{ secure_asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
 
     </body>
