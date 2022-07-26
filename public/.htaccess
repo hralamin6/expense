@@ -4,7 +4,8 @@
     </IfModule>
 
     RewriteEngine On
-
+    RewriteCond %{SERVER_PORT} 80
+    RewriteRule ^(.*)$ https://hranote.herokuapp.com/$1 [R,L]
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
