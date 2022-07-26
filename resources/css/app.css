@@ -1,4 +1,4 @@
-
+/*@import url('https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css');*/
 @tailwind base;
 input:invalid, textarea:invalid, select:invalid {
     box-shadow: none;
@@ -10,7 +10,26 @@ input:invalid, textarea:invalid, select:invalid {
 [x-cloak] {
     display: none;
 }
-@layer components {
+.scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    border-radius: 50vh;
+    background: #f7f4ed;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background: #e0cbcb;
+    border-radius: 50vh;
+    border: 1px solid #f6f7ed;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #c0a0b9;
+}
+@layer base {
     .navMenuLink {
         @apply m-2 px-3 py-2 flex justify-start rounded-md gap-2 hover:bg-purple-600 hover:text-white;
     }
@@ -45,4 +64,3 @@ input:invalid, textarea:invalid, select:invalid {
         @apply inline-flex items-center justify-between w-full text-sm font-semibold transition-colors duration-150 hover:text-gray-800 dark:hover:text-gray-200;
     }
 }
-
