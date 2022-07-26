@@ -31,5 +31,10 @@
         @yield('body')
 
         @livewireScripts
+        {{--        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
+        <script src="{{ asset('js/sa.js') }}"></script>
+        <x-livewire-alert::scripts />
+        <script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
+
     </body>
 </html>
