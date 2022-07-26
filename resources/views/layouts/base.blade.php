@@ -17,13 +17,11 @@
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
 
         <!-- Styles -->
-{{--        <link rel="stylesheet" href="{{ asset('css/app.css') }}">--}}
-        <link rel="stylesheet" href="{{ secure_asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ url(mix('css/app.css')) }}">
         @livewireStyles
 
         <!-- Scripts -->
-{{--        <script src="{{ asset('js/app.js') }}" defer></script>--}}
-        <script src="{{ secure_asset('js/app.js') }}" defer></script>
+        <script src="{{ url(mix('js/app.js')) }}" defer></script>
 
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -34,11 +32,12 @@
 
         @livewireScripts
         {{--        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
-{{--        <script src="{{ asset('js/sa.js') }}"></script>--}}
+        <script src="{{ asset('js/sa.js') }}"></script>
         <script src="{{ secure_asset('js/sa.js') }}"></script>
         <x-livewire-alert::scripts />
 {{--        <script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>--}}
-{{--        <script src="{{ secure_asset('js/spa.js') }}" data-turbolinks-eval="false"></script>--}}
+        <script src="{{ secure_asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
         <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js" data-turbolinks-eval="false"></script>
+
     </body>
 </html>
