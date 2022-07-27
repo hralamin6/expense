@@ -2,17 +2,18 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Chapter;
 use App\Models\Subject;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class HomeComponent extends Component
+class ChapterComponent extends Component
 {
     use WithPagination;
     use LivewireAlert;
-    public $subject, $name;
+    public $chapter, $subject, $name;
     protected $queryString = [
         'page'
     ];
@@ -21,48 +22,51 @@ class HomeComponent extends Component
     public $itemPerPage = 25;
     protected $listeners = ['deleteMultiple', 'deleteSingle'];
 
+    public function mount(Subject $subject)
+    {
+        $this->subject = $subject;
+    }
     public function saveData()
     {
-        if ($this->subject){
+        if ($this->chapter){
             $data = $this->validate([
-                'name' => ['required', 'min:2', 'max:44', Rule::unique('subjects', 'name')->ignore($this->subject['id'])],
+                'name' => ['required', 'min:2', 'max:44', Rule::unique('chapters', 'name')->ignore($this->chapter['id'])],
             ]);
-            $this->subject->update($data);
-            $this->emit('dataAdded', ['dataId' => 'item-id-'.$this->subject->id]);
+            $this->chapter->update($data);
+            $this->emit('dataAdded', ['dataId' => 'item-id-'.$this->chapter->id]);
             $this->alert('success', __('Data updated successfully'));
-            $this->reset('name', 'subject');
+            $this->reset('name', 'chapter');
         }else{
             $data =  $this->validate([
-                'name' => ['required', 'min:2', 'max:44', Rule::unique('subjects', 'name')],
+                'name' => ['required', 'min:2', 'max:44', Rule::unique('chapters', 'name')],
             ]);
-            $data = Subject::create(['user_id' => auth()->id(), 'name'=> $data['name']]);
+            $data = Chapter::create(['subject_id' => $this->subject->id, 'name'=> $data['name']]);
             $this->emit('dataAdded', ['dataId' => 'item-id-'.$data->id]);
             $this->alert('success', __('Data saved successfully'));
             $this->reset('name');
         }
     }
-    public function loadData(Subject $subject)
+    public function loadData(Chapter $chapter)
     {
         $this->reset('name');
-        $this->subject = $subject;
-        $this->name = $subject->name;
+        $this->chapter = $chapter;
+        $this->name = $chapter->name;
         $this->emit('openEditModal');
     }
 
     public function getDataProperty()
     {
-        return Subject::where('user_id', auth()->id())->Paginate($this->itemPerPage);
+        return Chapter::where('subject_id',$this->subject->id)->Paginate($this->itemPerPage);
     }
 
     public function render()
     {
         $items = $this->data;
-        return view('livewire.home-component', compact('items'));
+        return view('livewire.chapter-component', compact('items'));
     }
-    public function deleteSingle(Subject $subject)
+    public function deleteSingle(Chapter $chapter)
     {
-        $subject->delete();
+        $chapter->delete();
         $this->alert('success', __('Data deleted successfully'));
     }
-
 }

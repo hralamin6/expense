@@ -19,6 +19,13 @@ Swal.fire({
                 }
             })
 ">
+    <div class="flex justify-between gap-4 mb-2">
+        <div class="flex text-sm gap-1">
+            <a href="{{route('home')}}" class="text-blue-500 dark:text-blue-400">Subjects</a>
+            <span class="text-gray-500 dark:text-gray-200">/</span>
+            <span class="text-gray-500 dark:text-gray-300">Chapters</span>
+        </div>
+    </div>
     <div x-cloak
          x-show="add"
          x-transition:enter="transition ease-in-out duration-150"
@@ -31,7 +38,7 @@ Swal.fire({
     ></div>
 
         <div class="container p-3 mx-auto">
-            <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white">All Subject</h1>
+            <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white">chapters of {{$subject->name}}</h1>
 
             <div class="grid grid-cols-2 gap-4 md:gap-8 mt-3 xl:mt-12 xl:gap-12 md:grid-cols-3 lg:grid-cols-4">
                 @forelse($items as $i => $item)
@@ -42,9 +49,9 @@ Swal.fire({
                            <x-h-o-x class="h-5 text-red-500 dark:text-pink-200"/>
                        </button>
                    </div>
-                    <a href="{{route('chapter', $item)}}" class="flex flex-col">
+                    <a href="{{route('note', ['subject'=>$subject, 'chapter'=>$item])}}" class="flex flex-col">
                         <h2 class="text-5xl font-bold text-gray-800 uppercase dark:text-gray-100">
-                            <center> <x-h-o-book-open class="h-16 text-gray-600 dark:text-gray-200"/></center>
+                            <center> <x-h-o-bookmark class="h-16 text-gray-600 dark:text-gray-200"/></center>
                         </h2>
                         <p class="text-lg font-semibold text-center text-gray-800 capitalize lg:text-xl dark:text-white">{{$item->name}}</p>
                     </a>
@@ -65,4 +72,6 @@ Swal.fire({
         <a href="" class="cursor-pointer" @click.prevent="add=false"><x-h-o-x class="w-8 text-gray-600 dark:text-gray-200"/></a>
 
     </div>
+
+    <!-- New Table -->
 </div>

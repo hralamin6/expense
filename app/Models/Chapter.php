@@ -5,17 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model
+class Chapter extends Model
 {
     use HasFactory;
     protected $guarded = [];
-    public function user()
+    public function subject()
     {
-        return $this->belongsTo(User::class)->withDefault();
+        return $this->belongsTo(Subject::class)->withDefault();
     }
-    public function chapters()
+    public function notes()
     {
-        return $this->hasMany(Chapter::class);
+        return $this->hasMany(Note::class);
     }
-
 }

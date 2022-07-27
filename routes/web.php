@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', \App\Http\Livewire\HomeComponent::class)->name('home');
+    Route::get('/subject/{subject:id}', \App\Http\Livewire\ChapterComponent::class)->name('chapter');
+    Route::get('/subject/{subject:id}/chapter/{chapter:id}', \App\Http\Livewire\NoteComponent::class)->name('note');
+    Route::get('/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}', \App\Http\Livewire\DescriptionComponent::class)->name('description');
+    Route::get('/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}/edit', \App\Http\Livewire\EditNoteComponent::class)->name('edit.note');
     Route::get('/profile', \App\Http\Livewire\HomeComponent::class)->name('profile');
     Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
     Route::post('logout', LogoutController::class)->name('logout');
@@ -62,18 +66,18 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('optimize', function () {Artisan::call('optimize');
+Route::get('cmd/optimize', function () {Artisan::call('optimize');
     return "php artisan optimized successfully";
 })->name('optimize');
-Route::get('migrate', function () {Artisan::call('migrate');
+Route::get('cmd/migrate', function () {Artisan::call('migrate');
     return "php artisan migrate successfully";
 })->name('migrate');
-Route::get('migrate-fresh', function () {Artisan::call('migrate:fresh --seed');
+Route::get('cmd/migrate-fresh', function () {Artisan::call('migrate:fresh --seed');
     return "php artisan migrate-fresh successfully";
 })->name('migrate.fresh');
-Route::get('migrate-rollback', function () {Artisan::call('migrate:rollback');
+Route::get('cmd/migrate-rollback', function () {Artisan::call('migrate:rollback');
     return "php artisan migrate-rollback successfully";
 })->name('migrate.rollback');
-Route::get('db-seed', function () {Artisan::call('db:seed');
+Route::get('cmd/db-seed', function () {Artisan::call('db:seed');
     return "php artisan db:seed successfully";
 })->name('db.seed');

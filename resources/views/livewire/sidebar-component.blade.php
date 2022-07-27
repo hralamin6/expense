@@ -18,11 +18,7 @@
                 <x-h-o-home class="w-5"/>
                 <span class="">{{__('dashboard')}}</span>
             </a>
-            <a href="{{route('home')}}" class="navMenuLink {{Route::is('home')?'navActive':'navInactive'}}">
-                <x-h-o-home class="w-5"/>
-                <span class="">{{__('quiz')}}</span>
-            </a>
-            {{--            <div @if(Route::is('home.*')) x-data="{setup: true}" @else x-data="{setup: false}" @endif>--}}
+
             <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">
                 <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">
                     <x-h-o-home class="w-5"/><span class="">{{__('setup')}}</span>
@@ -36,33 +32,6 @@
                 </div>
             </div>
             <div  x-data="{artisan: false}">
-                <div @click="artisan= !artisan"  class="navMenuLink navInactive">
-                    <x-h-o-home class="w-5"/><span class="">{{__('Artisan')}}</span>
-                    <x-h-o-chevron-left x-show="!artisan" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="artisan" class="w-4 ml-auto"/>
-                </div>
-                <div x-show="artisan" class="" x-collapse>
-                    <a href="{{route('optimize')}}" class="subNavMenuLink {{Route::is('optimize')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('optimize')}}</span>
-                    </a>
-                    <a href="{{route('migrate')}}" class="subNavMenuLink {{Route::is('migrate')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('migrate')}}</span>
-                    </a>
-                    <a href="{{route('migrate.fresh')}}" class="subNavMenuLink {{Route::is('migrate.fresh')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('migrate fresh')}}</span>
-                    </a>
-                    <a href="{{route('migrate.rollback')}}" class="subNavMenuLink {{Route::is('migrate.rollback')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('migrate rollback')}}</span>
-                    </a>
-                    <a href="{{route('db.seed')}}" class="subNavMenuLink {{Route::is('db.seed')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('db seed')}}</span>
-                    </a>
-                </div>
-            </div> <div  x-data="{artisan: false}">
                 <div @click="artisan= !artisan"  class="navMenuLink navInactive">
                     <x-h-o-home class="w-5"/><span class="">{{__('Artisan')}}</span>
                     <x-h-o-chevron-left x-show="!artisan" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="artisan" class="w-4 ml-auto"/>
