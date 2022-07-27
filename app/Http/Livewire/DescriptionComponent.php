@@ -9,7 +9,9 @@ use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
+//use niklasravnsborg\LaravelPdf\Facades\Pdf;
+use niklasravnsborg\LaravelPdf\Pdf;
+
 class DescriptionComponent extends Component
 {
     use WithPagination;
@@ -74,8 +76,14 @@ class DescriptionComponent extends Component
     }
     public function generate_pdf()
     {
+        $data = [
+            'foo' => 'bar'
+        ];
+        $pdf = PDF::loadView('pdf.products', $data);
+        $pdf->SetProtection(['copy', 'print'], '', 'pass');
+        return $pdf->stream('document.pdf');
+
         return response()->streamDownload(function () {
-//            dd('asdf');
             $products = $this->data;
             $pdf = PDF::loadView('pdf.products', compact('products'));
             return $pdf->stream('document.pdf');
