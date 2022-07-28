@@ -2,11 +2,11 @@
      :class="{'hidden': nav == false}">
     <div class="h-14 border-b dark:border-gray-600 flex px-4 py-2 gap-3">
         <span class="w-10 h-10 rounded-full bg-purple-600 border dark:border-gray-600 shadow-xl"></span>
-        <span class="my-auto text-xl text-gray-500 font-mono dark:text-gray-300">Adminlte</span>
+        <span class="my-auto text-xl text-gray-500 font-mono dark:text-gray-300">Hranote</span>
     </div>
     <div class="h-16 border-b dark:border-gray-600 flex px-4 py-2 gap-3">
-        <span class="w-10 h-10 rounded-full bg-indigo-600 border dark:border-gray-600 shadow-xl"></span>
-        <span class="my-auto text-sm text-gray-600 font-medium dark:text-gray-300">Alexander Pairace</span>
+            <img class="object-cover rounded-full" src="https://www.gravatar.com/avatar/{{md5(auth()->user()->email)}}?d=mp" alt="" aria-hidden="true"/>
+        <span class="my-auto font-semibold text-gray-600 font-medium dark:text-gray-300">{{\Illuminate\Support\Facades\Auth::user()->name}}</span>
     </div>
     <div class="m-2 mt-4 flex">
         <input type="search"  class="border dark:border-gray-500 dark:bg-gray-600 dark:placeholder-gray-300 text-gray-200 text-sm border-gray-300 bg-gray-100 px-2 w-48 h-9 rounded-md rounded-r-none" placeholder="Search">
@@ -19,46 +19,19 @@
                 <span class="">{{__('dashboard')}}</span>
             </a>
 
-            <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">
-                <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">
-                    <x-h-o-home class="w-5"/><span class="">{{__('setup')}}</span>
-                    <x-h-o-chevron-left x-show="!setup" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="setup" class="w-4 ml-auto"/>
-                </div>
-                <div x-show="setup" class="" x-collapse>
-                    <a href="{{route('home')}}" class="subNavMenuLink {{Route::is('home')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-sparkles class="w-4"/>
-                        <span class="">{{__('class')}}</span>
-                    </a>
-                </div>
-            </div>
-            <div  x-data="{artisan: false}">
-                <div @click="artisan= !artisan"  class="navMenuLink navInactive">
-                    <x-h-o-home class="w-5"/><span class="">{{__('Artisan')}}</span>
-                    <x-h-o-chevron-left x-show="!artisan" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="artisan" class="w-4 ml-auto"/>
-                </div>
-                <div x-show="artisan" class="" x-collapse>
-                    <a href="{{route('optimize')}}" class="subNavMenuLink {{Route::is('optimize')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('optimize')}}</span>
-                    </a>
-                    <a href="{{route('migrate')}}" class="subNavMenuLink {{Route::is('migrate')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('migrate')}}</span>
-                    </a>
-                    <a href="{{route('migrate.fresh')}}" class="subNavMenuLink {{Route::is('migrate.fresh')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('migrate fresh')}}</span>
-                    </a>
-                    <a href="{{route('migrate.rollback')}}" class="subNavMenuLink {{Route::is('migrate.rollback')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('migrate rollback')}}</span>
-                    </a>
-                    <a href="{{route('db.seed')}}" class="subNavMenuLink {{Route::is('db.seed')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-light-bulb class="w-4"/>
-                        <span class="">{{__('db seed')}}</span>
-                    </a>
-                </div>
-            </div>
+{{--            <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">--}}
+{{--                <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">--}}
+{{--                    <x-h-o-home class="w-5"/><span class="">{{__('setup')}}</span>--}}
+{{--                    <x-h-o-chevron-left x-show="!setup" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="setup" class="w-4 ml-auto"/>--}}
+{{--                </div>--}}
+{{--                <div x-show="setup" class="" x-collapse>--}}
+{{--                    <a href="{{route('home')}}" class="subNavMenuLink {{Route::is('home')?'subNavActive':'subNavInactive'}}">--}}
+{{--                        <x-h-o-sparkles class="w-4"/>--}}
+{{--                        <span class="">{{__('class')}}</span>--}}
+{{--                    </a>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+
         </div>
     </div>
 </nav>

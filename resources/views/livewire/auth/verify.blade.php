@@ -2,9 +2,9 @@
 
 <div>
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
-        <a href="{{ route('home') }}">
-            <x-logo class="w-auto h-16 mx-auto text-indigo-600" />
-        </a>
+        <center>
+            <a href="{{route('home')}}" class="font-semibold font-serif capitalize text-indigo-600"><h3>Hranote</h3></a>
+        </center>
 
         <h2 class="mt-6 text-3xl font-extrabold text-center text-gray-900 leading-9">
             Verify your email address

@@ -9,10 +9,8 @@ use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
-use niklasravnsborg\LaravelPdf\Facades\Pdf;
-//use niklasravnsborg\LaravelPdf\Pdf;
 
-class DescriptionComponent extends Component
+class AllNoteComponent extends Component
 {
     use WithPagination;
     use LivewireAlert;
@@ -25,11 +23,10 @@ class DescriptionComponent extends Component
     public $itemPerPage = 25;
     protected $listeners = ['deleteMultiple', 'deleteSingle'];
 
-    public function mount(Subject $subject, Chapter $chapter, Note $note)
+    public function mount(Subject $subject, Chapter $chapter)
     {
         $this->subject = $subject;
         $this->chapter = $chapter;
-        $this->note = $note;
     }
     public function saveData()
     {
@@ -61,13 +58,13 @@ class DescriptionComponent extends Component
 
     public function getDataProperty()
     {
-        return Note::where('id',$this->note->id)->firstOrFail();
+        return Note::where('chapter_id',$this->chapter->id)->Paginate($this->itemPerPage);
     }
 
     public function render()
     {
-        $item = $this->data;
-        return view('livewire.description-component', compact('item'));
+        $items = $this->data;
+        return view('livewire.all-note-component', compact('items'));
     }
     public function deleteSingle(Note $note)
     {

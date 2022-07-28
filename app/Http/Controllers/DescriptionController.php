@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Description;
 use App\Http\Requests\StoreDescriptionRequest;
 use App\Http\Requests\UpdateDescriptionRequest;
+use App\Models\Note;
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 
 class DescriptionController extends Controller
 {
@@ -15,7 +17,7 @@ class DescriptionController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**

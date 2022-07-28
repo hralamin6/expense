@@ -32,12 +32,14 @@ Swal.fire({
 
         <div class="container p-3 mx-auto">
             <h1 class="text-3xl font-semibold text-center text-gray-800 capitalize lg:text-4xl dark:text-white">All Subject</h1>
+            <center><button @click.prevent="add=!add; $nextTick(() => $refs.input.focus());" x-on:click.stop><x-h-o-plus-circle class="h-8 text-gray-600 dark:text-gray-200"/></button></center>
 
             <div class="grid grid-cols-2 gap-4 md:gap-8 mt-3 xl:mt-12 xl:gap-12 md:grid-cols-3 lg:grid-cols-4">
                 @forelse($items as $i => $item)
                 <div class="w-full p-3 lg:p-8 group text-center dark:bg-gray-700 hover:bg-green-300 dark:hover:bg-green-700 bg-gray-400 rounded-lg hover:shadow-2xl">
                    <div class="flex justify-between invisible group-hover:visible">
                        <button wire:click.prevent="loadData({{$item->id}})"><x-h-o-pencil class="h-5 text-purple-500 dark:text-purple-200"/></button>
+                       <a href="{{route('all.chapter', $item)}}" class="cursor-pointer" ><x-h-o-eye class="h-5 text-indigo-500 dark:text-purple-200"/></a>
                        <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteSingle', model: {{$item->id}} })">
                            <x-h-o-x class="h-5 text-red-500 dark:text-pink-200"/>
                        </button>
@@ -54,7 +56,6 @@ Swal.fire({
             </div>
         </div>
 
-    <center><button @click.prevent="add=!add; $nextTick(() => $refs.input.focus());" x-on:click.stop><x-h-o-plus-circle class="h-8 text-gray-600 dark:text-gray-200"/></button></center>
     <div x-cloak x-show="add"  x-on:click.stop class="w-full absolute inset-0 inline-flex items-center justify-center z-50 flex space-x-2 text-gray-500 text-sm mt-5 font-bold"
          x-transition:enter.scale.60
          x-transition:leave.scale.40

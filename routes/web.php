@@ -10,7 +10,7 @@ use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
-
+use niklasravnsborg\LaravelPdf\Facades\Pdf;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -25,7 +25,9 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
     Route::get('/', \App\Http\Livewire\HomeComponent::class)->name('home');
     Route::get('/subject/{subject:id}', \App\Http\Livewire\ChapterComponent::class)->name('chapter');
+    Route::get('/subject/{subject:id}/all', \App\Http\Livewire\AllChapterComponent::class)->name('all.chapter');
     Route::get('/subject/{subject:id}/chapter/{chapter:id}', \App\Http\Livewire\NoteComponent::class)->name('note');
+    Route::get('/subject/{subject:id}/chapter/{chapter:id}/all', \App\Http\Livewire\AllNoteComponent::class)->name('all.note');
     Route::get('/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}', \App\Http\Livewire\DescriptionComponent::class)->name('description');
     Route::get('/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}/edit', \App\Http\Livewire\EditNoteComponent::class)->name('edit.note');
     Route::get('/profile', \App\Http\Livewire\HomeComponent::class)->name('profile');

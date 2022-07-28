@@ -19,9 +19,15 @@ class NoteComponent extends Component
         'page'
     ];
     public $selectedRows = [];
+    public $search = '';
     public $selectPageRows = false;
     public $itemPerPage = 25;
-    protected $listeners = ['deleteMultiple', 'deleteSingle'];
+    protected $listeners = ['deleteMultiple', 'deleteSingle', 'searched'];
+
+    public function searched($data)
+    {
+        $this->search = $data;
+    }
 
     public function mount(Subject $subject, Chapter $chapter)
     {
@@ -58,7 +64,7 @@ class NoteComponent extends Component
 
     public function getDataProperty()
     {
-        return Note::where('chapter_id',$this->chapter->id)->Paginate($this->itemPerPage);
+        return Note::where('chapter_id',$this->chapter->id)->where('name', 'like', '%'.$this->search.'%')->Paginate($this->itemPerPage);
     }
 
     public function render()

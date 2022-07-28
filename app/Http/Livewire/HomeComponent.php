@@ -17,10 +17,15 @@ class HomeComponent extends Component
         'page'
     ];
     public $selectedRows = [];
+    public $search = '';
     public $selectPageRows = false;
     public $itemPerPage = 25;
-    protected $listeners = ['deleteMultiple', 'deleteSingle'];
+    protected $listeners = ['deleteMultiple', 'deleteSingle', 'searched'];
 
+    public function searched($data)
+    {
+        $this->search = $data;
+    }
     public function saveData()
     {
         if ($this->subject){
@@ -51,7 +56,7 @@ class HomeComponent extends Component
 
     public function getDataProperty()
     {
-        return Subject::where('user_id', auth()->id())->Paginate($this->itemPerPage);
+        return Subject::where('user_id', auth()->id())->where('name', 'like', '%'.$this->search.'%')->Paginate($this->itemPerPage);
     }
 
     public function render()

@@ -39,7 +39,6 @@ Swal.fire({
          x-transition:leave-end="opacity-0"
          class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
     ></div>
-    <center><button @click.prevent="add=!add; $nextTick(() => $refs.input.focus());" x-on:click.stop><x-h-o-plus-circle class="h-8 text-gray-600 dark:text-gray-200"/></button></center>
     <div x-cloak x-show="add"  x-on:click.stop class="w-full absolute inset-0 inline-flex items-center justify-center z-50 flex space-x-2 text-gray-500 text-sm mt-5 font-bold"
          x-transition:enter.scale.60
          x-transition:leave.scale.40
@@ -52,8 +51,9 @@ Swal.fire({
     </div>
 
     <div class="container p-3 mx-auto">
-            <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl pb-2 dark:text-white">notes of {{$subject->name}}</h1>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            <h1 class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl pb-2 dark:text-white">{{$subject->name}}</h1>
+        <center><button @click.prevent="add=!add; $nextTick(() => $refs.input.focus());" x-on:click.stop><x-h-o-plus-circle class="h-8 text-gray-600 dark:text-gray-200"/></button></center>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @forelse($items as $i => $item)
 
                     <div class="group flex gap-3 bg-white border dark:border-gray-600 dark:bg-darkSidebar px-4 py-2 rounded-md">
@@ -67,7 +67,7 @@ Swal.fire({
                         </a>
 
                         <div class="flex flex-col justify-between invisible group-hover:visible">
-                            <button wire:click.prevent="loadData({{$item->id}})"><x-h-o-pencil class="h-5 text-purple-500 dark:text-purple-200"/></button>
+{{--                            <button wire:click.prevent="loadData({{$item->id}})"><x-h-o-pencil class="h-5 text-purple-500 dark:text-purple-200"/></button>--}}
                             <a data-turbolinks="false" href="{{route('edit.note', ['subject'=>$subject, 'chapter'=>$chapter, 'note'=>$item])}}"><x-h-o-pencil-alt class="h-5 text-purple-500 dark:text-purple-200"/></a>
                             <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteSingle', model: {{$item->id}} })">
                                 <x-h-o-x class="h-5 text-red-500 dark:text-pink-200"/>

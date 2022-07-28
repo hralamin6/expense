@@ -9,7 +9,7 @@ use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ChapterComponent extends Component
+class AllChapterComponent extends Component
 {
     use WithPagination;
     use LivewireAlert;
@@ -18,15 +18,9 @@ class ChapterComponent extends Component
         'page'
     ];
     public $selectedRows = [];
-    public $search='';
     public $selectPageRows = false;
     public $itemPerPage = 25;
-    protected $listeners = ['deleteMultiple', 'deleteSingle', 'searched'];
-
-    public function searched($data)
-    {
-        $this->search = $data;
-    }
+    protected $listeners = ['deleteMultiple', 'deleteSingle'];
 
     public function mount(Subject $subject)
     {
@@ -62,13 +56,13 @@ class ChapterComponent extends Component
 
     public function getDataProperty()
     {
-        return Chapter::where('subject_id',$this->subject->id)->where('name', 'like', '%'.$this->search.'%')->Paginate($this->itemPerPage);
+        return Chapter::with('notes')->where('subject_id',$this->subject->id)->Paginate($this->itemPerPage);
     }
 
     public function render()
     {
         $items = $this->data;
-        return view('livewire.chapter-component', compact('items'));
+        return view('livewire.all-chapter-component', compact('items'));
     }
     public function deleteSingle(Chapter $chapter)
     {

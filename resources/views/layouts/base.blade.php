@@ -9,7 +9,7 @@
         <title>{{ config('app.name') }}</title>
     @endif
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="shortcut icon" href="{{ url(asset('favicon.ico')) }}">
+    <link rel="shortcut icon" href="{{ url(asset('icon.jpg')) }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @livewireStyles
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -18,30 +18,8 @@
     @stack('js')
 </head>
 <body class="dark:bg-darkBg text-tahiti scrollbar-none" x-data="{nav: false, dark: $persist(false)}" :class="{'dark': dark}">
-<div class="dark:bg-darkBg flex h-screen"
-     :class="{ 'overflow-hidden': nav }"
->
-    <div x-cloak
-         x-show="nav"
-         x-transition:enter="transition ease-in-out duration-150"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in-out duration-150"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
-    ></div>
-    <livewire:sidebar-component />
-    <div class="flex flex-col flex-1 w-full">
-        <livewire:header-component />
-        <main class="h-full overflow-y-auto dark:bg-darkBg">
-            <div class="m-2">
+@yield('body')
 
-                @yield('body')
-            </div>
-        </main>
-    </div>
-</div>
 @livewireScripts
 <script src="{{ asset('js/sa.js') }}"></script>
 {{--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}

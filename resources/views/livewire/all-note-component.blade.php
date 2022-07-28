@@ -25,11 +25,10 @@ Swal.fire({
             <span class="text-gray-500 dark:text-gray-200">/</span>
             <a href="{{route('chapter', $subject)}}" class="text-blue-500 dark:text-blue-400">Chapters</a>
             <span class="text-gray-500 dark:text-gray-200">/</span>
-            <a href="{{route('note', ['subject' => $subject, 'chapter' => $chapter])}}" class="text-blue-500 dark:text-blue-400">Notes</a>
-            <span class="text-gray-500 dark:text-gray-200">/</span>
-            <span class="text-gray-500 dark:text-gray-300">Details</span>
+            <span class="text-gray-500 dark:text-gray-300">Notes</span>
         </div>
     </div>
+
     <div x-cloak
          x-show="add"
          x-transition:enter="transition ease-in-out duration-150"
@@ -40,14 +39,20 @@ Swal.fire({
          x-transition:leave-end="opacity-0"
          class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
     ></div>
-    <center><a href="javascript:void(0);" onclick="printPageArea('printableArea')"><x-h-o-plus-circle class="h-8 text-gray-600 dark:text-gray-200"/></a></center>
+    <center> <h1 style="color: #2563eb" class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl pb-2 dark:text-white">notes of {{$subject->name}}</h1> </center>
+    <center><a href="javascript:void(0);" onclick="printPageArea('printableArea')"><x-h-o-printer class="h-8 text-gray-600 dark:text-gray-200"/></a></center>
+    <div id="printableArea">
+    @forelse($items as $i => $item)
+    <div class="container p-3 mx-auto">
+        <center>
+            <h1 style="color: green" class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl pb-2 dark:text-white">{{$item->name}}</h1>
+        </center>
+        {!!$item->description!!}
+    </div>
+    @empty
+    @endforelse
+    </div>
 
-    <div class="container p-3 mx-auto" id="printableArea">
-          <center>
-              <h1 style="color: green" class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl pb-2 dark:text-white">{{$item->name}}</h1>
-          </center>
-                {!!$item->description!!}
-        </div>
 </div>
 
 @push('js')
