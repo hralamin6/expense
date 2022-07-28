@@ -53,13 +53,16 @@ Swal.fire({
 @push('js')
     <script>
         function printPageArea(areaID){
+            // var windowUrl = url;
+            var windowName = new Date();
             var printContent = document.getElementById(areaID);
-            var WinPrint = window.open('', '', 'width=900,height=650');
+            var WinPrint = window.open('', windowName, 'scrollbars=yes, width=900,height=650');
             WinPrint.document.write(printContent.innerHTML);
             WinPrint.document.close();
             WinPrint.focus();
-            WinPrint.print();
-            WinPrint.close();
+            WinPrint.onload = WinPrint.print;
+            // WinPrint.print();
+            // WinPrint.close();
         }
     </script>
 @endpush

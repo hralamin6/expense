@@ -54,25 +54,24 @@ Swal.fire({
 
     </div>
     <div>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-4">
-            <label class="block mt-3">
-                <span class="text-gray-700 dark:text-gray-400">{{__("Enter page name")}}</span>
-                <input type="text" wire:model.lazy="name" class="form-control-tw @error('name') is-invalid @enderror form-input" placeholder="{{__("Enter page name")}}">
-                @error('name')<span class="text-sm text-red-600 dark:text-red-400">{{ $message }}</span>@enderror
-            </label>
-        </div>
-        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
-            <label wire:ignore class="block mt-3">
-                <span class="text-gray-700 dark:text-gray-400">{{__("Enter page details")}}</span>
+{{--        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 pb-4">--}}
+{{--            <label class="block mt-3">--}}
+{{--                <span class="text-gray-700 dark:text-gray-400">{{__("Enter page name")}}</span>--}}
+{{--                <input type="text" wire:model.lazy="name" class="form-control-tw @error('name') is-invalid @enderror form-input" placeholder="{{__("Enter page name")}}">--}}
+{{--                @error('name')<span class="text-sm text-red-600 dark:text-red-400">{{ $message }}</span>@enderror--}}
+{{--            </label>--}}
+{{--        </div>--}}
+        <div class="w-96">
+            <label wire:ignore class="block mt-2">
                 <textarea id="open-source-plugins"  wire:model.defer="body" class="form-control-tw @error('body') is-invalid @enderror form-input">{!! @$body !!}</textarea>
             </label>
             @error('body') <span class="text-danger text-bold"> {{$message}}</span>@enderror
         </div>
 
         <div class="mt-4">
-                <button wire:click="saveData" type="button" class="btn btn-primary float-right">Update
-                    <span wire:loading wire:target="Update" class="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></span>
-                </button>
+            <button wire:click="saveData" type="button" class="flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 border border-transparent rounded-md hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:ring-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+                Update
+            </button>
         </div>
     </div>
 </div>
