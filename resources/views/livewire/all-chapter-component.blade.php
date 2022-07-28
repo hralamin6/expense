@@ -67,8 +67,9 @@ Swal.fire({
             WinPrint.document.write(printContent.innerHTML);
             WinPrint.document.close();
             WinPrint.focus();
-            WinPrint.print();
-            WinPrint.close();
+            WinPrint.onload = WinPrint.print;
+            // WinPrint.print();
+            // WinPrint.close();
         }
     </script>
 @endpush
