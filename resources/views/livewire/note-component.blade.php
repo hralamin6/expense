@@ -56,7 +56,7 @@ Swal.fire({
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 @forelse($items as $i => $item)
 
-                    <div class="group flex gap-3 bg-white border dark:border-gray-600 dark:bg-darkSidebar px-4 py-2 rounded-md">
+                    <div class="group flex gap-3 bg-white border justify-between dark:border-gray-600 dark:bg-darkSidebar px-4 py-2 rounded-md">
                         <a href="{{route('description', ['subject'=>$subject, 'chapter'=>$chapter, 'note'=>$item])}}" class="flex gap-2">
                             <div class="rounded-md bg-blue-100 dark:bg-darkBg px-4 py-3 text-white">
                                 <center> <x-h-o-information-circle class="h-8 md:h-10 text-purple-500 dark:text-purple-200"/></center>

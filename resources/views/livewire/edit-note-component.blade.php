@@ -74,4 +74,10 @@ Swal.fire({
             </button>
         </div>
     </div>
+    <div class="container p-3 mx-auto" id="printableArea">
+        <center>
+            <h1 style="color: green" class="text-2xl font-semibold text-center text-gray-800 capitalize lg:text-3xl pb-2 dark:text-white">{{$item->name}}</h1>
+        </center>
+        {!!$item->description!!}
+    </div>
 </div>
