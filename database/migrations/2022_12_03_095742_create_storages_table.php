@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('status')->default('active');
             $table->string('color')->default('blue');
+            $table->double('amount')->default(0);
             $table->timestamps();
         });
     }

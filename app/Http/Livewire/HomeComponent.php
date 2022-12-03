@@ -61,8 +61,9 @@ class HomeComponent extends Component
 
     public function render()
     {
+        $expense = Income::pluck('amount')->sum();
         $items = $this->data;
-        return view('livewire.home-component', compact('items'));
+        return view('livewire.home-component', compact('items', 'expense'));
     }
     public function deleteSingle(Subject $subject)
     {

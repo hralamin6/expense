@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Factories;
+use App\Models\Storage;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,12 +17,17 @@ class ExpenseFactory extends Factory
      */
     public function definition()
     {
+        $storage_id = rand(1, 10);
+        $amount = rand(100, 10000);
+        $storage = Storage::find($storage_id);
+        $storage->decrement('amount', $amount);
+
         return [
          'name' => $this->faker->sentence(1),
          'date' => $this->faker->dateTimeBetween('-1 week', '+1 week'),
          'category_id' => rand(1, 10),
-         'storage_id' => rand(1, 10),
-         'amount' => rand(100, 100000),
+         'storage_id' => $storage_id,
+         'amount' => $amount,
         ];
     }
 }
