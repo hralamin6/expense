@@ -18,6 +18,18 @@
                 <x-h-o-home class="w-5"/>
                 <span class="">{{__('dashboard')}}</span>
             </a>
+            <a href="{{route('expense.source')}}" class="navMenuLink {{Route::is('expense.source')?'navActive':'navInactive'}}">
+                <x-h-o-home class="w-5"/>
+                <span class="">{{__('source')}}</span>
+            </a>
+            <a href="{{route('expense.storage')}}" class="navMenuLink {{Route::is('expense.storage')?'navActive':'navInactive'}}">
+                <x-h-o-home class="w-5"/>
+                <span class="">{{__('storage')}}</span>
+            </a>
+            <a href="{{route('expense.category')}}" class="navMenuLink {{Route::is('expense.category')?'navActive':'navInactive'}}">
+                <x-h-o-home class="w-5"/>
+                <span class="">{{__('category')}}</span>
+            </a>
 
             <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">
                 <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">
