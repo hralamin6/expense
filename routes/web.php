@@ -14,7 +14,7 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
-|--------------------------------------------------------------------------
+|--------------------------------------------------------------------------note/
 |
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
@@ -23,13 +23,17 @@ use niklasravnsborg\LaravelPdf\Facades\Pdf;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', \App\Http\Livewire\HomeComponent::class)->name('home');
-    Route::get('/subject/{subject:id}', \App\Http\Livewire\ChapterComponent::class)->name('chapter');
-    Route::get('/subject/{subject:id}/all', \App\Http\Livewire\AllChapterComponent::class)->name('all.chapter');
-    Route::get('/subject/{subject:id}/chapter/{chapter:id}', \App\Http\Livewire\NoteComponent::class)->name('note');
-    Route::get('/subject/{subject:id}/chapter/{chapter:id}/all', \App\Http\Livewire\AllNoteComponent::class)->name('all.note');
-    Route::get('/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}', \App\Http\Livewire\DescriptionComponent::class)->name('description');
-    Route::get('/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}/edit', \App\Http\Livewire\EditNoteComponent::class)->name('edit.note');
+
+    Route::get('/', \App\Http\Livewire\Expense\HomeComponent::class)->name('expense.home');
+
+
+    Route::get('/note', \App\Http\Livewire\HomeComponent::class)->name('home');
+    Route::get('/note/subject/{subject:id}', \App\Http\Livewire\ChapterComponent::class)->name('chapter');
+    Route::get('/note/subject/{subject:id}/all', \App\Http\Livewire\AllChapterComponent::class)->name('all.chapter');
+    Route::get('/note/subject/{subject:id}/chapter/{chapter:id}', \App\Http\Livewire\NoteComponent::class)->name('note');
+    Route::get('/note/subject/{subject:id}/chapter/{chapter:id}/all', \App\Http\Livewire\AllNoteComponent::class)->name('all.note');
+    Route::get('/note/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}', \App\Http\Livewire\DescriptionComponent::class)->name('description');
+    Route::get('/note/subject/{subject:id}/chapter/{chapter:id}/note/{note:id}/edit', \App\Http\Livewire\EditNoteComponent::class)->name('edit.note');
     Route::get('/profile', \App\Http\Livewire\HomeComponent::class)->name('profile');
     Route::get('email/verify/{id}/{hash}', EmailVerificationController::class)->middleware('signed')->name('verification.verify');
     Route::post('logout', LogoutController::class)->name('logout');

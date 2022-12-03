@@ -14,7 +14,7 @@
              x-transition:leave-end="opacity-0"
              class="fixed inset-0 z-10 flex items-end bg-black bg-opacity-50 sm:items-center sm:justify-center"
         ></div>
-{{--        <livewire:sidebar-component />--}}
+        <livewire:sidebar-component />
         <div class="flex flex-col flex-1 w-full">
             <livewire:header-component />
             <main class="h-full overflow-y-auto dark:bg-darkBg">

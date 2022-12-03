@@ -4,8 +4,8 @@
 <header class="w-full h-14 bg-lightHeader dark:bg-darkSidebar border-b dark:border-gray-600" x-data="{search: false}">
     <div class="flex justify-between gap-6 p-4 relative inline-block">
         <div class="flex justify-start space-x-4 md:space-x-9 text-gray-500 dark:text-gray-200 z-0" :class="{'hidden': search}">
-{{--            <button @click="nav= !nav" x-on:click.stop><x-h-o-menu class="w-5 md:hidden"/></button>--}}
-            <a href="{{route('home')}}" class="font-semibold font-serif capitalize text-indigo-600"><h3>Hranote</h3></a>
+            <button @click="nav= !nav" x-on:click.stop><x-h-o-menu class="w-5 md:hidden"/></button>
+            <a href="{{route('expense.home')}}" class="font-semibold font-serif capitalize text-indigo-600"><h3>Hranote</h3></a>
 {{--            <a href="{{route('home')}}" class="hidden md:block capitalize">home</a>--}}
 {{--            <a href="{{route('home')}}" class="hidden md:block capitalize">contact</a>--}}
 

@@ -19,18 +19,18 @@
                 <span class="">{{__('dashboard')}}</span>
             </a>
 
-{{--            <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">--}}
-{{--                <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">--}}
-{{--                    <x-h-o-home class="w-5"/><span class="">{{__('setup')}}</span>--}}
-{{--                    <x-h-o-chevron-left x-show="!setup" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="setup" class="w-4 ml-auto"/>--}}
-{{--                </div>--}}
-{{--                <div x-show="setup" class="" x-collapse>--}}
-{{--                    <a href="{{route('home')}}" class="subNavMenuLink {{Route::is('home')?'subNavActive':'subNavInactive'}}">--}}
-{{--                        <x-h-o-sparkles class="w-4"/>--}}
-{{--                        <span class="">{{__('class')}}</span>--}}
-{{--                    </a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
+            <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">
+                <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">
+                    <x-h-o-home class="w-5"/><span class="">{{__('setup')}}</span>
+                    <x-h-o-chevron-left x-show="!setup" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="setup" class="w-4 ml-auto"/>
+                </div>
+                <div x-show="setup" class="" x-collapse>
+                    <a href="{{route('home')}}" class="subNavMenuLink {{Route::is('home')?'subNavActive':'subNavInactive'}}">
+                        <x-h-o-sparkles class="w-4"/>
+                        <span class="">{{__('class')}}</span>
+                    </a>
+                </div>
+            </div>
 
         </div>
     </div>
