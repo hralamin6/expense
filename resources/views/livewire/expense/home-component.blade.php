@@ -2,7 +2,7 @@
 $wire.on('dataAdded', (e) => { isOpen = false});
 $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus());})
 ">
-    @include('components.form')
+    @include('components.total')
 
         <div class="bg-white dark:bg-darkSidebar p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 capitalize">
 
@@ -29,8 +29,12 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
             </div>
     </div>
 
-<div class="flex overflow-x-auto overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
-    <button wire:click="$set('loadBy', 'daily')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:px-4 -px-1 dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
+<div class="flex overflow-x-auto justify-center overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
+    <button wire:click="$set('loadBy', 'daily')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $loadBy=='daily'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }}
+     ">
+
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mx-1 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
         </svg>
@@ -41,9 +45,12 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
     </button>
 
 
-    <button wire:click="$set('loadBy', 'monthly')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center bg-transparent border-b-2 sm:px-4 -px-1  whitespace-nowrap focus:outline-none">
+     <button wire:click="$set('loadBy', 'monthly')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $loadBy=='monthly'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }}
+     ">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mx-1 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
         </svg>
 
         <span class="mx-1 text-sm sm:text-base">
@@ -52,7 +59,10 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
     </button>
 
 
-    <button wire:click="$set('loadBy', 'yearly')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center text-blue-600 bg-transparent border-b-2 border-blue-500 sm:px-4 -px-1 dark:border-blue-400 dark:text-blue-300 whitespace-nowrap focus:outline-none">
+    <button wire:click="$set('loadBy', 'yearly')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $loadBy=='yearly'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }}
+     ">
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mx-1 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2" />
         </svg>
@@ -106,7 +116,7 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
                                         <x-field :OB="$orderBy" :OD="$orderDirection" :field="'amount'"> amount </x-field>
                                         <x-field :OB="$orderBy" :OD="$orderDirection" :field="'source_id'"> source </x-field>
                                         <x-field :OB="$orderBy" :OD="$orderDirection" :field="'storage_id'"> storage </x-field>
-                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'nadame'"> date </x-field>
+                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'date'"> date </x-field>
                                             </tr>
                                             </thead>
                                             <tbody
