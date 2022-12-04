@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Expense;
 
 use App\Models\Storage;
+use App\Models\Income;
+use App\Models\Expense;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -65,7 +67,9 @@ class StorageComponent extends Component
     public function render()
     {
         $items = $this->data;
-        return view('livewire.expense.storage-component', compact('items'));
+        $incomes = Income::where('user_id', auth()->id())->get();
+        $expenses = Expense::where('user_id', auth()->id())->get();
+        return view('livewire.expense.storage-component', compact('items', 'incomes', 'expenses'));
     }
     public function deleteSingle(Storage $storage)
     {

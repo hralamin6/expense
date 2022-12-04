@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Expense;
 
 use App\Models\Category;
+use App\Models\Expense;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -65,7 +66,8 @@ class CategoryComponent extends Component
     public function render()
     {
         $items = $this->data;
-        return view('livewire.expense.category-component', compact('items'));
+                $expenses = Expense::where('user_id', auth()->id())->get();
+        return view('livewire.expense.category-component', compact('items', 'expenses'));
     }
     public function deleteSingle(Category $category)
     {

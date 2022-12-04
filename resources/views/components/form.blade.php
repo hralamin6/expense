@@ -75,7 +75,7 @@
                             </button>
 
                             <button wire:click.prevent="saveData"  type="button" class="w-full px-4 py-2 mt-3 text-sm font-medium tracking-wide text-white capitalize transition-colors duration-300 transform bg-blue-600 rounded-md sm:mt-0 sm:w-1/2 sm:mx-2 hover:bg-blue-500 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40">
-                                Send invites
+                                Save
                             </button>
                         </div>
                     </form>

@@ -24,14 +24,16 @@ class HomeComponent extends Component
     public $selectedRows = [];
     public $search = '';
     public $searchByDate = '';
+    public $searchBySourceId = '';
+    public $searchByStorageId = '';
+    public $searchByCategoryId = '';
     public $loadBy = 'daily';
     public $selectPageRows = false;
     public $itemPerPage = 25;
     protected $listeners = ['deleteMultiple', 'deleteSingle', 'searched'];
-    public $orderBy = 'id';
+    public $orderBy = 'date';
     public $searchBy = 'id';
-    public $orderDirection = 'asc';
-
+    public $orderDirection = 'desc';
     public function searched($data)
     {
         $this->search = $data;
@@ -58,7 +60,7 @@ class HomeComponent extends Component
                         $this->emit('dataAdded', ['dataId' => 'item-id-'.$data->id]);
             $this->alert('success', __('Income saved successfully'));
             $this->reset('name', 'storage_id', 'source_id', 'date', 'amount');
-           }elseif ($this->category_id!=null) {
+           }elseif($this->category_id!=null) {
         $storage = Storage::find($this->storage_id);
         $storage->decrement('amount', $this->amount);
             $data = Expense::create(['user_id' => auth()->id(), 'name'=> $data['name'], 'storage_id'=> $data['storage_id'], 'category_id'=> $this->category_id, 'date'=> $data['date'], 'amount'=> $data['amount']]);
@@ -78,23 +80,60 @@ class HomeComponent extends Component
 }
     public function render()
     {
-        // dd($this->searchByDate);
         if ($this->loadBy=='daily') {
-     $incomes = Income::where($this->searchBy, 'like', '%'.$this->search.'%')->whereDate('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage)->withQueryString();
+     $incomes = Income::with('source', 'storage')
+     ->when($this->searchBySourceId, function ($query) {
+        return $query->where('source_id', $this->searchBySourceId);
+    })->when($this->searchByStorageId, function ($query) {
+        return $query->where('storage_id', $this->searchByStorageId);
+    })->where('user_id', auth()->id())->where($this->searchBy, 'like', '%'.$this->search.'%')->whereDate('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage, ['*'], 'income')->withQueryString();
+
+     $expenses = Expense::with('category', 'storage')
+     ->when($this->searchByStorageId, function ($query) {
+        return $query->where('storage_id', $this->searchByStorageId);
+    })->when($this->searchByCategoryId, function ($query) {
+        return $query->where('category_id', $this->searchByCategoryId);
+    })->where('user_id', auth()->id())->where($this->searchBy, 'like', '%'.$this->search.'%')->whereDate('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage, ['*'], 'expense')->withQueryString();
         }elseif($this->loadBy=='monthly'){
            $var = explode("-",$this->searchByDate);
-            // dd($var);
-     $incomes = Income::where($this->searchBy, 'like', '%'.$this->search.'%')->whereYear('date', '=', $var[0])->whereMonth('date', '=', $var[1])->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage)->withQueryString();
+     $incomes = Income::with('source', 'storage')->when($this->searchBySourceId, function ($query) {
+        return $query->where('source_id', $this->searchBySourceId);
+    })->when($this->searchByStorageId, function ($query) {
+        return $query->where('storage_id', $this->searchByStorageId);
+    })->where('user_id', auth()->id())->where($this->searchBy, 'like', '%'.$this->search.'%')->whereYear('date', '=', $var[0])->whereMonth('date', '=', $var[1])->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage, ['*'], 'income')->withQueryString();
+     $expenses = Expense::with('category', 'storage')->when($this->searchByCategoryId, function ($query) {
+        return $query->where('category_id', $this->searchByCategoryId);
+    })->when($this->searchByStorageId, function ($query) {
+        return $query->where('storage_id', $this->searchByStorageId);
+    })->where('user_id', auth()->id())->where($this->searchBy, 'like', '%'.$this->search.'%')->whereYear('date', '=', $var[0])->whereMonth('date', '=', $var[1])->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage, ['*'], 'expense')->withQueryString();
         }else{
-     $incomes = Income::where($this->searchBy, 'like', '%'.$this->search.'%')->whereYear('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage)->withQueryString();
+     $incomes = Income::with('source', 'storage')->when($this->searchBySourceId, function ($query) {
+        return $query->where('source_id', $this->searchBySourceId);
+    })->when($this->searchByStorageId, function ($query) {
+        return $query->where('storage_id', $this->searchByStorageId);
+    })->where('user_id', auth()->id())->where($this->searchBy, 'like', '%'.$this->search.'%')->whereYear('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage, ['*'], 'income')->withQueryString();
+     $expenses = Expense::with('category', 'storage')->when($this->searchByCategoryId, function ($query) {
+        return $query->where('category_id', $this->searchByCategoryId);
+    })->when($this->searchByStorageId, function ($query) {
+        return $query->where('storage_id', $this->searchByStorageId);
+    })->where('user_id', auth()->id())->where($this->searchBy, 'like', '%'.$this->search.'%')->whereYear('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage, ['*'], 'expense')->withQueryString();
         }
-     $expenses = Income::where('status', 'active')->get();
-     $categories = Category::where('status', 'active')->get();
-     $sources = Source::where('status', 'active')->get();
-     $storages = Storage::where('status', 'active')->get();
-     $income = Income::pluck('amount')->sum();
-     $expense = Expense::pluck('amount')->sum();
+        $sumOfExpense = $expenses->pluck('amount')->sum();
+        $sumOfIncome = $incomes->pluck('amount')->sum();
+        $sumOfBalance = $sumOfIncome-$sumOfExpense;
+     $categories = Category::where('status', 'active')->where('user_id', auth()->id())->get();
+     $sources = Source::where('status', 'active')->where('user_id', auth()->id())->get();
+     $storages = Storage::where('status', 'active')->where('user_id', auth()->id())->get();
+     $income = Income::where('user_id', auth()->id())->pluck('amount')->sum();
+     $expense = Expense::where('user_id', auth()->id())->pluck('amount')->sum();
      $balance = $income-$expense;
-        return view('livewire.expense.home-component', compact('expense', 'income', 'balance', 'sources', 'storages', 'categories', 'incomes', 'expenses'));
+        return view('livewire.expense.home-component', compact('expense', 'income', 'balance', 'sources', 'storages', 'categories', 'incomes', 'expenses', 'sumOfIncome', 'sumOfExpense', 'sumOfBalance'));
     }
+        public function deleteSingle(Income $income)
+    {
+        Storage::find($income->storage_id)->decrement('amount', $income->amount);
+        $income->delete();
+        $this->alert('success', __('Data deleted successfully'));
+    }
+
 }

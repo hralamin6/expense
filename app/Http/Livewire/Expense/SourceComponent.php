@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Expense;
 
 use App\Models\Source;
+use App\Models\Income;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -65,7 +66,8 @@ class SourceComponent extends Component
     public function render()
     {
         $items = $this->data;
-        return view('livewire.expense.source-component', compact('items'));
+        $incomes = Income::where('user_id', auth()->id())->get();
+        return view('livewire.expense.source-component', compact('items', 'incomes'));
     }
     public function deleteSingle(Source $source)
     {

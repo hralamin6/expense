@@ -1,10 +1,26 @@
 <div class="container mx-auto grid" x-data="{ isOpen: false, isIncome: true }" x-init="
 $wire.on('dataAdded', (e) => { isOpen = false});
 $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus());})
+"  @open-delete-modal.window="
+     model = event.detail.model
+     eventName = event.detail.eventName
+Swal.fire({
+                title: event.detail.title,
+                text: event.detail.text,
+                icon: event.detail.icon,
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.emit(eventName, model )
+                }
+            })
 ">
     @include('components.total')
 
-        <div class="bg-white dark:bg-darkSidebar p-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-4 capitalize">
+        <div class="bg-white dark:bg-darkSidebar p-4 mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 capitalize">
 
             <div @click="isOpen = true; isIncome = true" class="flex items-center justify-between max-w-2xl p-4 mx-auto border border-blue-500 cursor-pointer rounded-xl">
                 <div class="flex items-center">
@@ -13,7 +29,7 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
 </svg>
 
                     <div class="flex flex-col items-center mx-5 space-y-1">
-                        <h2 class="text-lg font-medium text-blue-700 sm:text-2xl dark:text-blue-200">add income</h2>
+                        <h2 class="text-sm font-medium text-blue-700 sm:text-2xl dark:text-blue-200">add income</h2>
                     </div>
                 </div>
             </div>
@@ -23,7 +39,7 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
                     <div class="flex flex-col items-center mx-5 space-y-1">
-                        <h2 class="text-lg font-medium text-red-700 sm:text-2xl dark:text-red-200">add expense</h2>
+                        <h2 class="text-sm font-medium text-red-700 sm:text-2xl dark:text-red-200">add expense</h2>
                     </div>
                 </div>
             </div>
@@ -75,96 +91,48 @@ $wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus
 
 </div>
 
-
-    <div class="w-24 flex justify-between gap-2 mb-2">
-                <div class="mt-1 rounded-md shadow-sm">
-                    <input wire:model.debounce.1000ms="itemPerPage" type="number" class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-600 dark:text-gray-300 dark:focus:border-blue-300" />
+    <div class="mx-auto grid grid-cols-2 md:grid-cols-3 justify-between lg:grid-cols-5 gap-2 mt-2">
+                <div class="rounded-md shadow-sm">
+                    <input wire:model.debounce.1000ms="itemPerPage" type="number" class="w-24 p-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-300 dark:bg-gray-700" />
                 </div>
                     <div class="mt-1 rounded-md shadow-sm">
-                        <input type="date" max="2014-02" wire:model="searchByDate"  class="block w-full px-4 py-3 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-300 dark:bg-gray-600"/>
+                        <input type="date" max="2014-02" wire:model="searchByDate"  class="p-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:text-gray-300 dark:focus:border-blue-300 dark:bg-gray-700"/>
                     </div>
+                    <div class="mt-1 rounded-md shadow-sm">
+                            <select wire:model.lazy="searchBySourceId" class="p-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:border-blue-300">
+                                <option value="">Select source</option>
+                                @foreach($sources as $i => $source)
+                                <option value="{{ $source->id }}">{{ $source->name }}</option>
+                                @endforeach()
+                            </select>
+                     </div>
+                    <div class="mt-1 rounded-md shadow-sm">
+                            <select wire:model.lazy="searchByStorageId" class="p-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:border-blue-300">
+                                <option value="">Select storage</option>
+                                @foreach($storages as $i => $storage)
+                                <option value="{{ $storage->id }}">{{ $storage->name }}</option>
+                                @endforeach()
+                            </select>
+                     </div>
+                    <div class="mt-1 rounded-md shadow-sm">
+                            <select wire:model.lazy="searchByCategoryId" class="p-2 text-sm text-gray-700 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:outline-none focus:ring focus:ring-blue-300 focus:ring-opacity-40 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:focus:border-blue-300">
+                                <option value="">Select category</option>
+                                @foreach($categories as $i => $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                @endforeach()
+                            </select>
+                     </div>
 
-                @error('itemPerPage')
-                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
             </div>
-<div class="rounded-xl mt-4 overflow-x-auto" x-data="{openTable: $persist(true)}">
-                        <aside class="border dark:border-gray-600 row-span-4 bg-white dark:bg-darkSidebar">
-                            <div class="flex capitalize justify-between gap-3 bg-white border dark:border-gray-600 dark:bg-darkSidebar px-4 py-2">
-                                <p class="text-gray-600 text-center dark:text-gray-200">Products Table</p>
-                                <div class="flex justify-center gap-4 text-gray-500 dark:text-gray-300">
-                                    <button class="" @click="openTable = !openTable">
-                                        <svg x-show="openTable" xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 20 20" fill="currentColor">
-                                            <path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" />
-                                        </svg>
-                                        <svg x-show="!openTable" xmlns="http://www.w3.org/2000/svg" class="h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-                                        </svg>
-                                    </button>
-
-                                </div>
-                            </div>
-                            <div x-show="openTable" x-collapse>
-                                <div class="mb-1 overflow-y-scroll scrollbar-none">
-                                    <div class="w-full overflow-x-auto">
-                                        <table class="w-full whitespace-no-wrap">
-                                            <thead>
-                                            <tr
-                                                class="text-xs font-semibold capitalize tracking-wide text-left text-gray-500 uppercase border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-darkSidebar"
-                                            >
-                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'name'"> details </x-field>
-                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'amount'"> amount </x-field>
-                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'source_id'"> source </x-field>
-                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'storage_id'"> storage </x-field>
-                                        <x-field :OB="$orderBy" :OD="$orderDirection" :field="'date'"> date </x-field>
-                                            </tr>
-                                            </thead>
-                                            <tbody
-                                                class="bg-white divide-y text-xs dark:divide-gray-700 dark:bg-darkSidebar"
-                                            >
-                                            @foreach($incomes as $i=> $income)
-                                            <tr class="text-gray-700 dark:text-gray-400">
-                                                <td class="px-4 py-3">
-                                                    <div class="flex items-center">
-                                                        <div>
-                                                            <p class="font-semibold">{{ $income->name }}</p>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td class="px-4 py-3">
-                                                   {{ $income->amount }}
-                                                </td>
-                                                <td class="px-4 py-3 text-xs">
-                        <span style="color: {{ $income->source->color }};">
-                          {{ $income->source->name }}
-                        </span>
-                                             </td>
-                                                  <td class="px-4 py-3 text-xs">
-                        <span style="color: {{ $income->storage->color }};">
-                          {{ $income->storage->name }}
-                        </span>
-                        </span>
-                                               </td>
-                                                <td class="px-4 py-3 text-sm">
-                                                    {{ $income->date }}
-                                                </td>
-                                            </tr>
-                                            @endforeach
+        <div class="flex flex-row gap-4 justify-center mt-2">
+            <span class="text-green-600 dark:text-green-300">Income {{ $sumOfIncome }}</span>
+            <span class="text-red-600 dark:text-red-300">Expense {{ $sumOfExpense }}</span>
+            <span class="text-blue-600 dark:text-blue-300">Balance {{ $sumOfBalance }}</span>
+        </div>
 
 
-                                            </tbody>
-                                        </table>
-                                    </div>
 
-                                </div>
-                            </div>
-                            <div class="text-center flex justify-between bg-white border dark:border-gray-600 dark:bg-darkSidebar py-2 bg-gray-50 px-4">
-                                <a href="" class="rounded-md px-2 py-1 bg-purple-600 text-sm text-white">Place New Order</a>
-                                <a href="" class="rounded-md px-2 py-1 bg-indigo-600 text-sm text-white">View All Users</a>
-                            </div>
-                        </aside>
-                    </div>
-
-
+    @include('components.income-table')
+    @include('components.expense-table')
     @include('components.form')
 </div>

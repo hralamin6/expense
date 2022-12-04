@@ -34,23 +34,28 @@ Swal.fire({
             <h1 class="text-3xl pb-3 font-semibold capitalize text-center text-gray-800 capitalize lg:text-4xl dark:text-white">all source</h1>
             <center><button @click.prevent="add=!add; $nextTick(() => $refs.input.focus());" x-on:click.stop><x-h-o-plus-circle class="h-8 text-gray-600 dark:text-gray-200"/></button></center>
 
-            <div  class="grid grid-cols-2 gap-4 md:gap-8 mt-3 xl:mt-8 xl:gap-12 md:grid-cols-3 lg:grid-cols-4">
+<div class="container py-4 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 capitalize">
                 @forelse($items as $i => $item)
-                <div style="background:{{$item->color}};" class="w-full p-3 lg:p-8 group text-center dark:bg-gray-700 hover:bg-green-300 dark:hover:bg-green-700 bg-gray-400 rounded-lg hover:shadow-2xl">
-                   <div class="flex justify-between invisible group-hover:visible">
+                   <div style="border-color:{{$item->color}};" class="flex items-center group justify-between max-w-2xl p-4 mx-auto border border-green-500 cursor-pointer rounded-xl">
+                        <div class=" justify-between invisible group-hover:visible">
                        <button wire:click.prevent="loadData({{$item->id}})"><x-h-o-pencil class="h-5 text-purple-500 dark:text-purple-200"/></button>
-                       <a href="{{route('all.chapter', $item)}}" class="cursor-pointer" ><x-h-o-eye class="h-5 text-indigo-500 dark:text-purple-200"/></a>
-                       <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteSingle', model: {{$item->id}} })">
+{{--                        <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteSingle', model: {{$item->id}} })">
                            <x-h-o-x class="h-5 text-red-500 dark:text-pink-200"/>
                        </button>
-                   </div>
-                    <a href="{{route('chapter', $item)}}" class="flex flex-col">
-{{--                         <h2 class="text-5xl font-bold text-gray-800 uppercase dark:text-gray-100">
-                            <center> <x-h-o-book-open class="h-16 text-gray-600 dark:text-gray-200"/></center>
-                        </h2>
- --}}                        <p  class="text-lg font-semibold text-center text-gray-800 capitalize lg:text-xl dark:text-white">{{$item->name}}</p>
-                    </a>
+ --}}                   </div>
+
+                <div class="flex items-center">
+                    <svg style="color:{{$item->color}};" xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-green-600 sm:h-9 sm:w-9" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+
+                    <div class="flex flex-col items-center mx-5 space-y-1">
+                        <h2 class="text-lg font-medium text-gray-700 sm:text-2xl dark:text-gray-200">{{ $item->name }}</h2>
+                    </div>
                 </div>
+
+                <h2 style="color:{{$item->color}};" class="text-2xl font-semibold text-green-600 sm:text-3xl">{{ $incomes->where('source_id', $item->id)->pluck('amount')->sum() }} <span class="text-base font-medium"></span></h2>
+            </div>
                 @empty
                 @endforelse
             </div>
@@ -60,7 +65,7 @@ Swal.fire({
          x-transition:enter.scale.60
          x-transition:leave.scale.40
     >
-        <input x-ref="input" id="input" wire:model.lazy="name" type="text" class="dark:bg-gray-600 dark:placeholder-gray-300 w-full bg-gray-300 text-gray-500 h-8 rounded-xl border-none text-sm" autofocus placeholder="type category">
+        <input x-ref="input" id="input" wire:model.lazy="name" type="text" class="dark:bg-gray-600 dark:placeholder-gray-300 w-full bg-gray-300 text-gray-500 h-8 rounded-xl border-none text-sm" autofocus placeholder="type source">
         @error('name')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
         <input wire:model.lazy="color" type="color" class="dark:bg-gray-600 dark:placeholder-gray-300 w-full bg-gray-300 text-gray-500 h-8 rounded-xl border-none text-sm" autofocus placeholder="type colour">
         @error('color')<p class="text-sm text-red-600">{{ $message }}</p>@enderror
