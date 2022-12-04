@@ -17,7 +17,7 @@ class SourceFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'source '. $this->faker->company(),
+         'name' => $this->faker->sentence(1),
             'color' => $this->faker->hexColor(),
         ];
     }

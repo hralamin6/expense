@@ -17,7 +17,7 @@ class StorageFactory extends Factory
     public function definition()
     {
         return [
-            'name' => 'storage '. $this->faker->company(),
+         'name' => $this->faker->sentence(1),
             'color' => $this->faker->hexColor(),
         ];
     }

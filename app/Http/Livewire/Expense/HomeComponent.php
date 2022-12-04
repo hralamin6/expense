@@ -8,7 +8,7 @@ use Livewire\WithPagination;
 use App\Models\Income;
 use App\Models\Expense;
 use App\Models\Category;
-use App\Models\Source;
+    use App\Models\Source;
 use App\Models\Storage;
 use Illuminate\Validation\Rule;
 
@@ -23,9 +23,14 @@ class HomeComponent extends Component
     ];
     public $selectedRows = [];
     public $search = '';
+    public $searchByDate = '';
+    public $loadBy = 'daily';
     public $selectPageRows = false;
     public $itemPerPage = 25;
     protected $listeners = ['deleteMultiple', 'deleteSingle', 'searched'];
+    public $orderBy = 'id';
+    public $searchBy = 'id';
+    public $orderDirection = 'asc';
 
     public function searched($data)
     {
@@ -35,7 +40,9 @@ class HomeComponent extends Component
     {
             $this->reset('name', 'storage_id', 'source_id', 'date', 'amount', 'category_id');
     }
-
+    public function mount(){
+                $this->searchByDate = date('Y-m-d');
+    }
     public function saveData()
     {
            $data = $this->validate([
@@ -64,15 +71,22 @@ class HomeComponent extends Component
            }
 
     }
-
+    public function orderByDirection($field)
+    {
+        $this->orderBy = $field;
+        $this->orderDirection==='asc'? $this->orderDirection='desc': $this->orderDirection='asc';
+}
     public function render()
     {
+        // dd($this->searchByDate);
+     $incomes = Income::where($this->searchBy, 'like', '%'.$this->search.'%')->whereDate('date', '=', $this->searchByDate)->orderBy($this->orderBy, $this->orderDirection)->paginate($this->itemPerPage)->withQueryString();
+     $expenses = Income::where('status', 'active')->get();
      $categories = Category::where('status', 'active')->get();
      $sources = Source::where('status', 'active')->get();
      $storages = Storage::where('status', 'active')->get();
      $income = Income::pluck('amount')->sum();
      $expense = Expense::pluck('amount')->sum();
      $balance = $income-$expense;
-        return view('livewire.expense.home-component', compact('expense', 'income', 'balance', 'sources', 'storages', 'categories'));
+        return view('livewire.expense.home-component', compact('expense', 'income', 'balance', 'sources', 'storages', 'categories', 'incomes', 'expenses'));
     }
 }

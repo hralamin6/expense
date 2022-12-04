@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('status')->default('active');
             $table->double('amount')->default(0);
-            $table->date('date')->default(now());
+            $table->timestamp('date')->default(now());
             $table->timestamps();
         });
     }
