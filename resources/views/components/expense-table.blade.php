@@ -1,7 +1,8 @@
 <div class="rounded-xl mt-4 overflow-x-auto" x-data="{openTable: $persist(true)}">
                         <aside class="border dark:border-gray-600 row-span-4 bg-white dark:bg-darkSidebar">
                             <div class="flex capitalize justify-between gap-3 bg-white border dark:border-gray-600 dark:bg-darkSidebar px-4 py-2">
-                                <p class="text-gray-600 text-center dark:text-gray-200">Expense Table</p>
+                                <p class="text-red-600 text-center dark:text-red-200">Expense Table</p>
+                                <p class="text-gray-600 text-center dark:text-gray-200">{{ $loadBy=='daily'?date('d-l, F-Y', strtotime($searchByDate)) : ($loadBy=='monthly'?date('F-Y', strtotime($searchByDate)):($loadBy=='yearly'?date('Y', strtotime($searchByDate)):'All')) }}</p>
                                 <div class="flex justify-center gap-4 text-gray-500 dark:text-gray-300">
                                     <button class="" @click="openTable = !openTable">
                                         <svg x-show="openTable" xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -60,7 +61,7 @@
                                                     {{ $expense->date }}
                                                 </td>
                                                 <td class="px-4 py-3 text-sm">
-                       <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteSingle', model: {{$expense->id}} })">
+                       <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteExpense', model: {{$expense->id}} })">
                            <x-h-o-x class="h-5 text-red-500 dark:text-pink-200"/>
                        </button>
                                                 </td>
@@ -74,7 +75,7 @@
 
                                 </div>
                             </div>
-        <div class="items-center text-center mx-auto my-8">
+        <div class="m-4">
             {{ $expenses->links() }}
         </div>
                         </aside>

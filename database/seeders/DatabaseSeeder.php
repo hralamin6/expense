@@ -46,10 +46,10 @@ class DatabaseSeeder extends Seeder
             Storage::factory(10)->create([
                 'user_id' => $user->id,
             ]);
-            Income::factory(50)->create([
+            Income::factory(200)->create([
                 'user_id' => $user->id,
             ]);
-            Expense::factory(100)->create([
+            Expense::factory(500)->create([
                 'user_id' => $user->id,
             ]);
 

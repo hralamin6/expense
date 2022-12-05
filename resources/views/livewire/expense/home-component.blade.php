@@ -1,6 +1,45 @@
-<div class="container mx-auto grid" x-data="{ isOpen: false, isIncome: true }" x-init="
-$wire.on('dataAdded', (e) => { isOpen = false});
-$wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus());})
+<div class="container mx-auto grid" x-data="{ income: @entangle('income_chart').defer, expense: @entangle('expense_chart').defer, balance: @entangle('balance_chart').defer, isOpen: false, isIncome: true}" x-init="
+$wire.on('dataAdded', (e) => {isOpen = false});
+$wire.on('openEditModal', (e) => { add = true; $nextTick(() => $refs.input.focus());});
+const barConfig = {
+  type: 'bar',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [
+      {
+        label: 'Income',
+        backgroundColor: 'green',
+        // borderColor: window.chartColors.red,
+        borderWidth: 1,
+        data: [income[0], income[1], income[2], income[3], income[4], income[5], income[6], income[7], income[7], income[9], income[10], income[11] ]
+      },
+      {
+        label: 'Expense',
+        backgroundColor: 'red',
+        // borderColor: window.chartColors.blue,
+        borderWidth: 1,
+        data: [expense[0], expense[1], expense[2], expense[3], expense[4], expense[5], expense[6], expense[7], expense[7], expense[9], expense[10], expense[11] ],
+       },
+      {
+        label: 'Balance',
+        backgroundColor: 'blue',
+        // borderColor: window.chartColors.blue,
+        borderWidth: 1,
+        data: [balance[0], balance[1], balance[2], balance[3], balance[4], balance[5], balance[6], balance[7], balance[7], balance[9], balance[10], balance[11] ],
+       },
+    ],
+  },
+  options: {
+    responsive: true,
+    legend: {
+      display: true,
+    },
+  },
+}
+
+const barsCtx = document.getElementById('bars')
+window.myBar = new Chart(barsCtx, barConfig)
+
 "  @open-delete-modal.window="
      model = event.detail.model
      eventName = event.detail.eventName
@@ -20,26 +59,26 @@ Swal.fire({
 ">
     @include('components.total')
 
-        <div class="bg-white dark:bg-darkSidebar p-4 mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 capitalize">
+        <div class="bg-white dark:bg-darkSidebar shadow-xl rounded-2xl my-4 p-4 mx-auto grid grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4 capitalize">
 
-            <div @click="isOpen = true; isIncome = true" class="flex items-center justify-between max-w-2xl p-4 mx-auto border border-blue-500 cursor-pointer rounded-xl">
+            <div @click="isOpen = true; isIncome = true" class="flex items-center justify-between max-w-2xl p-2 mx-auto border border-blue-500 cursor-pointer rounded-xl">
                 <div class="flex items-center">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-600 sm:h-9 sm:w-9">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-blue-600 sm:h-6 sm:w-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
 
-                    <div class="flex flex-col items-center mx-5 space-y-1">
-                        <h2 class="text-sm font-medium text-blue-700 sm:text-2xl dark:text-blue-200">add income</h2>
+                    <div class="flex flex-col items-center mx-2 space-y-1">
+                        <h2 class="text-sm font-medium text-blue-700 sm:text-lg dark:text-blue-200">add income</h2>
                     </div>
                 </div>
             </div>
-            <div @click="isOpen = true; isIncome = false" class="flex items-center justify-between max-w-2xl p-4 mx-auto border border-red-500 cursor-pointer rounded-xl">
+            <div @click="isOpen = true; isIncome = false" class="flex items-center justify-between max-w-2xl p-2 mx-auto border border-red-500 cursor-pointer rounded-xl">
                 <div class="flex items-center">
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600 sm:h-9 sm:w-9">
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-red-600 sm:h-6 sm:w-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
 </svg>
-                    <div class="flex flex-col items-center mx-5 space-y-1">
-                        <h2 class="text-sm font-medium text-red-700 sm:text-2xl dark:text-red-200">add expense</h2>
+                    <div class="flex flex-col items-center mx-2 space-y-1">
+                        <h2 class="text-sm font-medium text-red-700 sm:text-lg dark:text-red-200">add expense</h2>
                     </div>
                 </div>
             </div>
@@ -88,7 +127,18 @@ Swal.fire({
         </span>
     </button>
 
+<button wire:click="$set('loadBy', 'all')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $loadBy=='all'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }}
+     ">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 mx-1 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+        </svg>
 
+        <span class="mx-1 text-sm sm:text-base">
+            All
+        </span>
+    </button>
 </div>
 
     <div class="mx-auto grid grid-cols-2 md:grid-cols-3 justify-between lg:grid-cols-5 gap-2 mt-2">
@@ -135,4 +185,38 @@ Swal.fire({
     @include('components.income-table')
     @include('components.expense-table')
     @include('components.form')
+
+{{--           <div class="container px-6 mx-auto grid">
+            <h2
+              class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
+            >
+              Charts
+            </h2>
+
+            <div class="grid gap-6 mb-8 md:grid-cols-2">
+              <!-- Doughnut/Pie chart -->
+
+              <!-- Bars chart -->
+              <div
+                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                  Bars
+                </h4>
+<div>
+  <canvas id="myChart"></canvas>
 </div>
+              </div>
+            </div>
+          </div>
+ --}}
+ <div
+                class="min-w-0 p-4 bg-white rounded-lg shadow-xs dark:bg-gray-800"
+              >
+                <h4 class="mb-4 font-semibold text-gray-800 dark:text-gray-300">
+                  Bars
+                </h4>
+                <canvas id="bars"></canvas>
+              </div>
+            </div>
+            </div>

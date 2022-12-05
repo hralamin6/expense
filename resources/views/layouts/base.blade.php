@@ -24,21 +24,26 @@
     <meta name="twitter:title" content="@yield('title', 'Home Page') - {{config('app.name')}}" />
     <meta name="twitter:image" content="{{ url(asset('icon.jpg')) }}" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" href="{{ url(asset('icon.jpg')) }}" type="image/x-icon">
     <link rel="icon" href="{{ url(asset('icon.jpg')) }}" type="image/x-icon">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css"
+    />
+
     @livewireStyles
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-{{--    <script src="{{ asset('js/echo.js') }}"></script>--}}
     <script src="{{ asset('js/app.js') }}" defer></script>
-    @stack('js')
 </head>
 <body class="dark:bg-darkBg text-tahiti scrollbar-none" x-data="{nav: false, dark: $persist(false)}" :class="{'dark': dark}">
 @yield('body')
+<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+
+    @stack('js')
 
 @livewireScripts
 <script src="{{ asset('js/sa.js') }}"></script>
-{{--<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>--}}
 <x-livewire-alert::scripts />
 <script src="{{ asset('js/spa.js') }}" data-turbolinks-eval="false"></script>
 </body>

@@ -1,7 +1,8 @@
 <div class="rounded-xl mt-4 overflow-x-auto" x-data="{openTable: $persist(true)}">
                         <aside class="border dark:border-gray-600 row-span-4 bg-white dark:bg-darkSidebar">
                             <div class="flex capitalize justify-between gap-3 bg-white border dark:border-gray-600 dark:bg-darkSidebar px-4 py-2">
-                                <p class="text-gray-600 text-center dark:text-gray-200">Income Table</p>
+                                <p class="text-green-600 text-center dark:text-green-200">Income Table</p>
+                                <p class="text-gray-600 text-center dark:text-gray-200">{{ $loadBy=='daily'?date('d-l, F-Y', strtotime($searchByDate)) : ($loadBy=='monthly'?date('F-Y', strtotime($searchByDate)):($loadBy=='yearly'?date('Y', strtotime($searchByDate)):'All')) }}</p>
                                 <div class="flex justify-center gap-4 text-gray-500 dark:text-gray-300">
                                     <button class="" @click="openTable = !openTable">
                                         <svg x-show="openTable" xmlns="http://www.w3.org/2000/svg" class="h-4" viewBox="0 0 20 20" fill="currentColor">
@@ -60,7 +61,7 @@
                                                     {{ $income->date }}
                                                 </td>
                                                 <td class="px-4 py-3 text-sm">
-                       <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteSingle', model: {{$income->id}} })">
+                       <button @click.prevent="$dispatch('open-delete-modal', { title: 'Do you want to delete!', text: 'You can not revert it', icon: 'error', eventName: 'deleteIncome', model: {{$income->id}} })">
                            <x-h-o-x class="h-5 text-red-500 dark:text-pink-200"/>
                        </button>
                                                 </td>

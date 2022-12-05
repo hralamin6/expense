@@ -23,7 +23,7 @@ class IncomeFactory extends Factory
         $storage->increment('amount', $amount);
         return [
          'name' => $this->faker->sentence(1),
-         'date' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
+         'date' => $this->faker->dateTimeBetween('-3 year', '+3 year'),
          'source_id' => rand(1, 10),
          'storage_id' => $storage_id,
          'amount' => $amount,
