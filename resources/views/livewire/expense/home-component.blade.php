@@ -186,6 +186,34 @@ Swal.fire({
     @include('components.expense-table')
     @include('components.form')
 
+
+<div class="flex overflow-x-auto justify-center overflow-y-hidden border-b border-gray-200 whitespace-nowrap dark:border-gray-700">
+     <button wire:click="$set('chart_year', '2022')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $chart_year=='2022'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }}
+     ">
+        <span class="mx-1 text-sm sm:text-base">
+            2022
+        </span>
+    </button>
+
+
+    <button wire:click="$set('chart_year', '2023')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $chart_year=='2023'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }}
+     ">        <span class="mx-1 text-sm sm:text-base">
+            2023
+        </span>
+    </button>
+
+<button wire:click="$set('chart_year', '2024')" class="inline-flex items-center h-10 px-2 py-2 -mb-px text-center
+     bg-transparent border-b-2  sm:px-4 -px-1  whitespace-nowrap focus:outline-none hover:border-gray-400
+{{ $chart_year=='2024'?'text-blue-600 border-blue-500 dark:border-blue-400 dark:text-blue-300':'text-gray-700 border-transparent dark:text-white' }} "> <span class="mx-1 text-sm sm:text-base">
+            2024
+        </span>
+    </button>
+</div>
+
 {{--           <div class="container px-6 mx-auto grid">
             <h2
               class="my-6 text-2xl font-semibold text-gray-700 dark:text-gray-200"
@@ -220,3 +248,50 @@ Swal.fire({
               </div>
             </div>
             </div>
+{{-- @push('js')
+<script>
+        window.addEventListener('alpine:init', function () {
+            var income = @this.income_chart;
+            var expense = @this.expense_chart;
+            var balance = @this.balance_chart;
+    const barConfig = {
+  type: 'bar',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [
+      {
+        label: 'Income',
+        backgroundColor: 'green',
+        // borderColor: window.chartColors.red,
+        borderWidth: 1,
+        data: [income[0], income[1], income[2], income[3], income[4], income[5], income[6], income[7], income[7], income[9], income[10], income[11] ]
+      },
+      {
+        label: 'Expense',
+        backgroundColor: 'red',
+        // borderColor: window.chartColors.blue,
+        borderWidth: 1,
+        data: [expense[0], expense[1], expense[2], expense[3], expense[4], expense[5], expense[6], expense[7], expense[7], expense[9], expense[10], expense[11] ],
+       },
+      {
+        label: 'Balance',
+        backgroundColor: 'blue',
+        // borderColor: window.chartColors.blue,
+        borderWidth: 1,
+        data: [balance[0], balance[1], balance[2], balance[3], balance[4], balance[5], balance[6], balance[7], balance[7], balance[9], balance[10], balance[11] ],
+       },
+    ],
+  },
+  options: {
+    responsive: true,
+    legend: {
+      display: true,
+    },
+  },
+}
+const barsCtx = document.getElementById('bars')
+window.myBar = new Chart(barsCtx, barConfig)
+})
+</script>
+@endpush
+ --}}

@@ -19,13 +19,14 @@ class HomeComponent extends Component
     use LivewireAlert;
     public $subject, $name, $source_id, $storage_id, $amount, $date, $category_id;
     protected $queryString = [
-        'page'
+        'page', 'chart_year' => ['except' => '2022'],
     ];
     public $selectedRows = [];
     public $var = [];
     public $income_chart = [];
     public $expense_chart = [];
     public $balance_chart = [];
+    public $chart_year = '2022';
     public $search = '';
     public $searchByDate = '';
     public $searchBySourceId = '';
@@ -48,7 +49,6 @@ class HomeComponent extends Component
     }
     public function mount(){
                 $this->searchByDate = date('Y-m-d');
-
     }
     public function saveData()
     {
@@ -83,13 +83,17 @@ class HomeComponent extends Component
         $this->orderBy = $field;
         $this->orderDirection==='asc'? $this->orderDirection='desc': $this->orderDirection='asc';
 }
+    public function updatedChartYear()
+    {
+return redirect()->route('expense.home', 'chart_year='.$this->chart_year);
+}
     public function render()
     {
     $this->var = explode("-",$this->searchByDate);
 
     for ($i=0; $i < 12; $i++) {
-     $this->income_chart[$i] = Income::whereYear('date', '=', $this->var[0])->whereMonth('date', '=', $i+1)->where('user_id', auth()->id())->pluck('amount')->sum();
-     $this->expense_chart[$i] = Expense::whereYear('date', '=', $this->var[0])->whereMonth('date', '=', $i+1)->where('user_id', auth()->id())->pluck('amount')->sum();
+     $this->income_chart[$i] = Income::whereYear('date', '=', $this->chart_year)->whereMonth('date', '=', $i+1)->where('user_id', auth()->id())->pluck('amount')->sum();
+     $this->expense_chart[$i] = Expense::whereYear('date', '=', $this->chart_year)->whereMonth('date', '=', $i+1)->where('user_id', auth()->id())->pluck('amount')->sum();
      $this->balance_chart[$i] = $this->income_chart[$i]-$this->expense_chart[$i];
     }
     // dd($income_chart);
@@ -154,7 +158,6 @@ class HomeComponent extends Component
      $income = Income::where('user_id', auth()->id())->pluck('amount')->sum();
      $expense = Expense::where('user_id', auth()->id())->pluck('amount')->sum();
      $balance = $income-$expense;
-     $this->emit('loadAll');
         return view('livewire.expense.home-component', compact('expense', 'income', 'balance', 'sources', 'storages', 'categories', 'incomes', 'expenses', 'sumOfIncome', 'sumOfExpense', 'sumOfBalance'));
     }
         public function deleteIncome(Income $income)

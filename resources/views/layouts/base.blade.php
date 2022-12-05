@@ -38,7 +38,7 @@
 </head>
 <body class="dark:bg-darkBg text-tahiti scrollbar-none" x-data="{nav: false, dark: $persist(false)}" :class="{'dark': dark}">
 @yield('body')
-<script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     @stack('js')
 
