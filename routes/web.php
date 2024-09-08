@@ -26,8 +26,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/', \App\Http\Livewire\Expense\HomeComponent::class)->name('expense.home');
     Route::get('/source', \App\Http\Livewire\Expense\SourceComponent::class)->name('expense.source');
-    Route::get('/storage', \App\Http\Livewire\Expense\StorageComponent::class)->name('expense.storage');
-    Route::get('/catgory', \App\Http\Livewire\Expense\CategoryComponent::class)->name('expense.category');
+    Route::get('/mystorage', \App\Http\Livewire\Expense\StorageComponent::class)->name('expense.storage');
+    Route::get('/category', \App\Http\Livewire\Expense\CategoryComponent::class)->name('expense.category');
 
 
     Route::get('/note', \App\Http\Livewire\HomeComponent::class)->name('home');

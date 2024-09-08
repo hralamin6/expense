@@ -14,7 +14,7 @@
     </div>
     <div class="overflow-hidden h-screen scrollbar-none overflow-y-scroll scrollbar-thumb-gray-400 scrollbar-track-white  scrollbar-thin">
         <div class="capitalize">
-            <a href="{{route('home')}}" class="navMenuLink {{Route::is('home')?'navActive':'navInactive'}}">
+            <a href="{{route('expense.home')}}" class="navMenuLink {{Route::is('expense.home')?'navActive':'navInactive'}}">
                 <x-h-o-home class="w-5"/>
                 <span class="">{{__('dashboard')}}</span>
             </a>
@@ -30,19 +30,11 @@
                 <x-h-o-home class="w-5"/>
                 <span class="">{{__('category')}}</span>
             </a>
+            <a href="{{route('home')}}" class="navMenuLink {{Route::is('home')?'navActive':'navInactive'}}">
+                <x-h-o-home class="w-5"/>
+                <span class="">{{__('note')}}</span>
+            </a>
 
-            <div  x-data="{setup: @if(Route::is('home.*')) true @else false @endif}">
-                <div @click="setup= !setup"  class="navMenuLink {{Route::is('home.*')?'navActive':'navInactive'}}">
-                    <x-h-o-home class="w-5"/><span class="">{{__('setup')}}</span>
-                    <x-h-o-chevron-left x-show="!setup" class="w-4 ml-auto"/><x-h-o-chevron-down x-show="setup" class="w-4 ml-auto"/>
-                </div>
-                <div x-show="setup" class="" x-collapse>
-                    <a href="{{route('home')}}" class="subNavMenuLink {{Route::is('home')?'subNavActive':'subNavInactive'}}">
-                        <x-h-o-sparkles class="w-4"/>
-                        <span class="">{{__('class')}}</span>
-                    </a>
-                </div>
-            </div>
 
         </div>
     </div>

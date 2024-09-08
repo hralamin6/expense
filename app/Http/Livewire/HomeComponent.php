@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Income;
 use App\Models\Subject;
 use Illuminate\Validation\Rule;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
